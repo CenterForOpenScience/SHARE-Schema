@@ -1,0 +1,68 @@
+{
+  "collectionTime": "2014-03-14T00:00:00Z",
+  "creationDate": "2014-09-12",
+  "creator": [
+    {
+      "name": "Roger Danger Ebert",
+      "sameAs": [
+        "/wrgr2/",
+        "DAE"
+      ],
+      "familyName": "Ebert",
+      "givenName": "Roger",
+      "additionalName": "Danger",
+      "email": "roger@example.com",
+      "affiliation": "University of Movies"
+    },
+    {
+      "name": "Roger Madness Ebert",
+      "sameAs": [
+        "/wrgr3/",
+        "DAE4"
+      ],
+      "familyName": "Ebert",
+      "givenName": "Roger",
+      "additionalName": "Madness",
+      "email": "rogermadness@example.com",
+      "affiliation": "University of Movies"
+    }
+  ],
+  "description": "This is a thing",
+  "directLink": "www.example.com/stuff",
+  "releaseDate": "2014-12-12",
+  "freeToRead": {
+    "startDate": "2014-09-12",
+    "endDate": "2014-10-12"
+  },
+  "licenseRef": [
+    {
+      "uri": "www.mitlicense.com",
+      "startDate": "2014-10-12",
+      "endDate": "2014-11-12"
+    }
+  ],
+  "notificationLink": "http://myresearch.com/",
+  "publisher": "Roger Ebert Inc",
+  "raw": "http://osf.io/raw/thisdocument/",
+  "relation": [
+    "http://otherresearch.com/this"
+  ],
+  "resourceIdentifier": "http://landingpage.com/this",
+  "revisionTime": "2014-02-12T15:25:02Z",
+  "source": "Big government",
+  "sponsorship": [
+    {
+      "award": {
+        "awardName": "Participation",
+        "awardIdentifier": "http://example.com"
+      },
+      "sponsor": {
+        "sponsorName": "Orange",
+        "sponsorIdentifier": "http://example.com/orange"
+      }
+    }
+  ],
+  "title": "Interesting research",
+  "journalArticleVersion": "AO",
+  "versionOfRecord": "http://example.com/this/now/"
+}

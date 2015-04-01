@@ -1,35 +1,137 @@
-creationDate:
-    type: string
-    format: date-time
-
-creators:
-    type: array
-    items:
-
-    oneOf:
-        - $ref: "#/definitions/institution"
-        - $ref: "#/definitions/person"
-
-definitions:
-    institution:
-        type: object
-        properties:
-            name:
-                type: string
+---
+  definitions:
+    date:
+      type: "string"
+      pattern: "[0-2]\\d\\d\\d-[0-1]\\d-[0-3]\\d"
     person:
-        type: object
-        properties:
-            name:
-                type: string
-            familyName:
-                type: string
-                description: In the U.S., also called last name
-                minLength: 1
-                default: Doe
-            givenName:
-                type: string
-                description: In the U.S., also called first name
-                minLength: 1
-                default: Jane
-            additionalName:
-                type: string
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        sameAs:
+          type: "array"
+          items:
+            type: "string"
+        familyName:
+          type: "string"
+        givenName:
+          type: "string"
+        additionalName:
+          type: "string"
+        email:
+          type: "string"
+        affiliation:
+          type: "string"
+      required:
+        - "name"
+    institution:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        sameAs:
+          type: "array"
+          items:
+            type: "string"
+        email:
+          type: "string"
+      required:
+        - "name"
+  $schema: "http://json-schema.org/draft-04/schema#"
+  type: "object"
+  properties:
+    collectionTime:
+      type: "string"
+    creationDate:
+      $ref:  "#/definitions/date"
+    creator:
+      type: "array"
+      items:
+        anyOf:
+          - $ref: "#/definitions/person"
+          - $ref: "#/definitions/institution"
+    description: 
+      type: "string"
+    directLink: 
+      type: "string"
+    releaseDate: 
+      $ref: "#/definitions/date"
+    freeToRead: 
+      type: "object"
+      properties: 
+        startDate: 
+          $ref: "#/definitions/date"
+        endDate: 
+          $ref: "#/definitions/date"
+    licenseRef: 
+      type: "array"
+      items: 
+        type: "object"
+        properties: 
+          uri: 
+            type: "string"
+          startDate: 
+            $ref: "#/definitions/date"
+          endDate: 
+            $ref: "#/definitions/date"
+    notificationLink: 
+      type: "string"
+    publisher: 
+      type: "string"
+    raw: 
+      type: "string"
+    relation: 
+      type: "array"
+      items: 
+        type: "string"
+    resourceIdentifier: 
+      type: "string"
+    revisionTime: 
+      type: "string"
+    source: 
+      type: "string"
+    sponsorship: 
+      type: "array"
+      items: 
+        type: "object"
+        properties: 
+          award: 
+            type: "object"
+            properties: 
+              awardName: 
+                type: "string"
+              awardIdentifier: 
+                type: "string"
+          sponsor: 
+            type: "object"
+            properties: 
+              sponsorName: 
+                type: "string"
+              sponsorIdentifier: 
+                type: "string"
+    title: 
+      type: "string"
+    journalArticleVersion: 
+      type: "string"
+    versionOfRecord: 
+      type: "string"
+  required: 
+    - "collectionTime"
+    - "creationDate"
+    - "creator"
+    - "description"
+    - "directLink"
+    - "releaseDate"
+    - "freeToRead"
+    - "licenseRef"
+    - "notificationLink"
+    - "publisher"
+    - "raw"
+    - "relation"
+    - "resourceIdentifier"
+    - "revisionTime"
+    - "source"
+    - "sponsorship"
+    - "title"
+    - "journalArticleVersion"
+    - "versionOfRecord"
