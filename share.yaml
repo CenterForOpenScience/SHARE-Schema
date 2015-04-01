@@ -67,6 +67,17 @@
           $ref: "#/definitions/sponsor"
       required:
         - "sponsor"
+    dateRange: 
+      type: "object"
+      properties:
+        startDate:
+          type: "string"
+          format: "date"
+        endDate:
+          type: "string"
+          format: "date"
+      required:
+        - startDate
   $schema: "http://json-schema.org/draft-04/schema#"
   type: "object"
   properties:
@@ -92,27 +103,16 @@
       type: "string"
     freeToRead: 
       type: "object"
-      properties: 
-        startDate: 
-          type: "string"
-          format: "date"
-        endDate: 
-          type: "string"
-          format: "date"
+      $ref: "#/definitions/dateRange"
     licenseRef: 
       type: "array"
       items: 
         type: "object"
+        $ref: "#/definitions/dateRange"
         properties: 
           uri: 
             type: "string"
             format: "uri"
-          startDate: 
-            type: "string"
-            format: "date"
-          endDate: 
-            type: "string"
-            format: "date"
     notificationLink: 
       type: "string"
     publisher: 
