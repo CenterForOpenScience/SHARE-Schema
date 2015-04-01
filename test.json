@@ -5,8 +5,7 @@
     {
       "name": "Roger Danger Ebert",
       "sameAs": [
-        "/wrgr2/",
-        "DAE"
+        "https://osf.io/wrgr2/"
       ],
       "familyName": "Ebert",
       "givenName": "Roger",
@@ -17,8 +16,7 @@
     {
       "name": "Roger Madness Ebert",
       "sameAs": [
-        "/wrgr3/",
-        "DAE4"
+        "http://osf.io/wrgr3/"
       ],
       "familyName": "Ebert",
       "givenName": "Roger",

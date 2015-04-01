@@ -1,8 +1,5 @@
 ---
   definitions:
-    date:
-      type: "string"
-      pattern: "[0-2]\\d\\d\\d-[0-1]\\d-[0-3]\\d"
     person:
       type: "object"
       properties:
@@ -12,6 +9,7 @@
           type: "array"
           items:
             type: "string"
+            format: "uri"
         familyName:
           type: "string"
         givenName:
@@ -20,6 +18,7 @@
           type: "string"
         email:
           type: "string"
+          format: "email"
         affiliation:
           type: "string"
       required:
@@ -33,8 +32,10 @@
           type: "array"
           items:
             type: "string"
+            format: "uri"
         email:
           type: "string"
+          format: "uri"
       required:
         - "name"
   $schema: "http://json-schema.org/draft-04/schema#"
@@ -42,8 +43,10 @@
   properties:
     collectionTime:
       type: "string"
+      format: "date-time"
     creationDate:
-      $ref:  "#/definitions/date"
+      type: "string"
+      format: "date"
     creator:
       type: "array"
       items:
@@ -55,14 +58,17 @@
     directLink: 
       type: "string"
     releaseDate: 
-      $ref: "#/definitions/date"
+      format: "date"
+      type: "string"
     freeToRead: 
       type: "object"
       properties: 
         startDate: 
-          $ref: "#/definitions/date"
+          type: "string"
+          format: "date"
         endDate: 
-          $ref: "#/definitions/date"
+          type: "string"
+          format: "date"
     licenseRef: 
       type: "array"
       items: 
@@ -71,9 +77,11 @@
           uri: 
             type: "string"
           startDate: 
-            $ref: "#/definitions/date"
+            type: "string"
+            format: "date"
           endDate: 
-            $ref: "#/definitions/date"
+            type: "string"
+            format: "date"
     notificationLink: 
       type: "string"
     publisher: 
