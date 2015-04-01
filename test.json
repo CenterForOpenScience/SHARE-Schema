@@ -26,7 +26,7 @@
     }
   ],
   "description": "This is a thing",
-  "directLink": "www.example.com/stuff",
+  "directLink": "https://www.example.com/stuff",
   "releaseDate": "2014-12-12",
   "freeToRead": {
     "startDate": "2014-09-12",
@@ -34,7 +34,7 @@
   },
   "licenseRef": [
     {
-      "uri": "www.mitlicense.com",
+      "uri": "http://www.mitlicense.com",
       "startDate": "2014-10-12",
       "endDate": "2014-11-12"
     }

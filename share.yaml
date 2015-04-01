@@ -38,6 +38,35 @@
           format: "uri"
       required:
         - "name"
+    award:
+      type: "object"
+      properties:
+        awardName:
+          type: "string"
+        awardIdentifier:
+          type: "string"
+          format: "uri"
+      required:
+        - "awardName"
+    sponsor:
+      type: "object"
+      properties:
+        sponsorName:
+          type: "string"
+        sponsorIdentifier:
+          type: "string"
+          format: "uri"
+      required:
+        - "sponsorName"
+    sponsorship:
+      type: "object"
+      properties:
+        award: 
+          $ref: "#/definitions/award"
+        sponsor: 
+          $ref: "#/definitions/sponsor"
+      required:
+        - "sponsor"
   $schema: "http://json-schema.org/draft-04/schema#"
   type: "object"
   properties:
@@ -57,6 +86,7 @@
       type: "string"
     directLink: 
       type: "string"
+      format: "uri"
     releaseDate: 
       format: "date"
       type: "string"
@@ -76,6 +106,7 @@
         properties: 
           uri: 
             type: "string"
+            format: "uri"
           startDate: 
             type: "string"
             format: "date"
@@ -101,22 +132,7 @@
     sponsorship: 
       type: "array"
       items: 
-        type: "object"
-        properties: 
-          award: 
-            type: "object"
-            properties: 
-              awardName: 
-                type: "string"
-              awardIdentifier: 
-                type: "string"
-          sponsor: 
-            type: "object"
-            properties: 
-              sponsorName: 
-                type: "string"
-              sponsorIdentifier: 
-                type: "string"
+        $ref: "#/definitions/sponsorship"
     title: 
       type: "string"
     journalArticleVersion: 
@@ -125,21 +141,11 @@
       type: "string"
   required: 
     - "collectionTime"
-    - "creationDate"
     - "creator"
-    - "description"
     - "directLink"
     - "releaseDate"
-    - "freeToRead"
-    - "licenseRef"
     - "notificationLink"
-    - "publisher"
     - "raw"
-    - "relation"
     - "resourceIdentifier"
-    - "revisionTime"
     - "source"
-    - "sponsorship"
     - "title"
-    - "journalArticleVersion"
-    - "versionOfRecord"
