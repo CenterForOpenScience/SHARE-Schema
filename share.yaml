@@ -1,145 +1,142 @@
 ---
-  definitions:
-    person:
-      type: "object"
-      properties:
-        name:
-          type: "string"
-        sameAs:
-          type: "array"
-          items:
-            type: "string"
-            format: "uri"
-        familyName:
-          type: "string"
-        givenName:
-          type: "string"
-        additionalName:
-          type: "string"
-        email:
-          type: "string"
-          format: "email"
-        affiliation:
-          type: "string"
-      required:
-        - "name"
-    institution:
-      type: "object"
-      properties:
-        name:
-          type: "string"
-        sameAs:
-          type: "array"
-          items:
-            type: "string"
-            format: "uri"
-        email:
-          type: "string"
-          format: "uri"
-      required:
-        - "name"
-  $schema: "http://json-schema.org/draft-04/schema#"
-  type: "object"
-  properties:
-    collectionTime:
-      type: "string"
-      format: "date-time"
-    creationDate:
-      type: "string"
-      format: "date"
-    creator:
-      type: "array"
-      items:
-        anyOf:
-          - $ref: "#/definitions/person"
-          - $ref: "#/definitions/institution"
-    description: 
-      type: "string"
-    directLink: 
-      type: "string"
-    releaseDate: 
-      format: "date"
-      type: "string"
-    freeToRead: 
-      type: "object"
-      properties: 
-        startDate: 
-          type: "string"
-          format: "date"
-        endDate: 
-          type: "string"
-          format: "date"
-    licenseRef: 
-      type: "array"
-      items: 
-        type: "object"
-        properties: 
-          uri: 
-            type: "string"
-          startDate: 
+    definitions:
+        person:
+            type: "object"
+            properties:
+                name:
+                    type: "string"
+                sameAs:
+                    type: "array"
+                    items:
+                        type: "string"
+                        format: "uri"
+                familyName:
+                    type: "string"
+                givenName:
+                    type: "string"
+                additionalName:
+                    type: "string"
+                email:
+                    type: "string"
+                    format: "email"
+                affiliation:
+                    type: "string"
+            required:
+                - "name"
+        institution:
+            type: "object"
+            properties:
+                name:
+                    type: "string"
+                sameAs:
+                    type: "array"
+                    items:
+                        type: "string"
+                        format: "uri"
+                email:
+                    type: "string"
+                    format: "uri"
+            required:
+                - "name"
+    $schema: "http://json-schema.org/draft-04/schema#"
+    type: "object"
+    properties:
+        creationDate:
             type: "string"
             format: "date"
-          endDate: 
+        creator:
+            type: "array"
+            items:
+                anyOf:
+                    - $ref: "#/definitions/person"
+                    - $ref: "#/definitions/institution"
+        description: 
             type: "string"
+        directLink: 
+            type: "string"
+        releaseDate: 
             format: "date"
-    notificationLink: 
-      type: "string"
-    publisher: 
-      type: "string"
-    raw: 
-      type: "string"
-    relation: 
-      type: "array"
-      items: 
-        type: "string"
-    resourceIdentifier: 
-      type: "string"
-    revisionTime: 
-      type: "string"
-    source: 
-      type: "string"
-    sponsorship: 
-      type: "array"
-      items: 
-        type: "object"
-        properties: 
-          award: 
+            type: "string"
+        freeToRead: 
             type: "object"
             properties: 
-              awardName: 
+                startDate: 
+                    type: "string"
+                    format: "date"
+                endDate: 
+                    type: "string"
+                    format: "date"
+        language:
+            type: "string"
+        licenseRef: 
+            type: "array"
+            items: 
+                type: "object"
+                properties: 
+                    uri: 
+                        type: "string"
+                    startDate: 
+                        type: "string"
+                        format: "date"
+                    endDate: 
+                        type: "string"
+                        format: "date"
+        notificationLink: 
+            type: "string"
+        publisher: 
+            type: "string"
+        raw: 
+            type: "string"
+        relation: 
+            type: "array"
+            items: 
                 type: "string"
-              awardIdentifier: 
-                type: "string"
-          sponsor: 
+        resourceIdentifier: 
+            type: "string"
+        revisionTime: 
+            type: "string"
+        source: 
+            type: "string"
+        sponsorship: 
+            type: "array"
+            items: 
+                type: "object"
+                properties: 
+                    award: 
+                        type: "object"
+                        properties: 
+                            awardName: 
+                                type: "string"
+                            awardIdentifier: 
+                                type: "string"
+                    sponsor: 
+                        type: "object"
+                        properties: 
+                            sponsorName: 
+                                type: "string"
+                            sponsorIdentifier: 
+                                type: "string"
+        title: 
+            type: "string"
+        journalArticleVersion: 
+            type: "string"
+        versionOfRecord: 
+            type: "string"
+        otherProperties:
             type: "object"
-            properties: 
-              sponsorName: 
-                type: "string"
-              sponsorIdentifier: 
-                type: "string"
-    title: 
-      type: "string"
-    journalArticleVersion: 
-      type: "string"
-    versionOfRecord: 
-      type: "string"
-  required: 
-    - "collectionTime"
-    - "creationDate"
-    - "creator"
-    - "description"
-    - "directLink"
-    - "releaseDate"
-    - "freeToRead"
-    - "licenseRef"
-    - "notificationLink"
-    - "publisher"
-    - "raw"
-    - "relation"
-    - "resourceIdentifier"
-    - "revisionTime"
-    - "source"
-    - "sponsorship"
-    - "title"
-    - "journalArticleVersion"
-    - "versionOfRecord"
+        shareProperties:
+            type: "object"
+            properties:
+                collectionDateTime:
+                    type: "string"
+    required:
+        - "creationDate"
+        - "creator"
+        - "directLink"
+        - "notificationLink"
+        - "relation"
+        - "resourceIdentifier"
+        - "revisionTime"
+        - "source"
+        - "sponsorship"
+        - "title"
