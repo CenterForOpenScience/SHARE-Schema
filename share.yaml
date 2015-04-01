@@ -1,0 +1,35 @@
+creationDate:
+    type: string
+    format: date-time
+
+creators:
+    type: array
+    items:
+
+    oneOf:
+        - $ref: "#/definitions/institution"
+        - $ref: "#/definitions/person"
+
+definitions:
+    institution:
+        type: object
+        properties:
+            name:
+                type: string
+    person:
+        type: object
+        properties:
+            name:
+                type: string
+            familyName:
+                type: string
+                description: In the U.S., also called last name
+                minLength: 1
+                default: Doe
+            givenName:
+                type: string
+                description: In the U.S., also called first name
+                minLength: 1
+                default: Jane
+            additionalName:
+                type: string
