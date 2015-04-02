@@ -38,6 +38,35 @@
                     format: "uri"
             required:
                 - "name"
+        award:
+            type: "object"
+            properties:
+                awardName:
+                    type: "string"
+                awardIdentifier:
+                    type: "string"
+                    format: "uri"
+            required:
+                - "awardName"
+        sponsor:
+            type: "object"
+            properties:
+                sponsorName:
+                    type: "string"
+                sponsorIdentifier:
+                    type: "string"
+                    format: "uri"
+            required:
+                - "sponsorName"
+        sponsorship:
+            type: "object"
+            properties:
+                award:
+                    $ref: "#/definitions/award"
+                sponsor:
+                    $ref: "#/definitions/sponsor"
+            required:
+                - "sponsor"
     $schema: "http://json-schema.org/draft-04/schema#"
     type: "object"
     properties:
@@ -50,78 +79,81 @@
                 anyOf:
                     - $ref: "#/definitions/person"
                     - $ref: "#/definitions/institution"
-        description: 
+        description:
             type: "string"
-        directLink: 
+        directLink:
             type: "string"
-        releaseDate: 
+            format: "uri"
+        releaseDate:
             format: "date"
             type: "string"
-        freeToRead: 
+        freeToRead:
             type: "object"
-            properties: 
-                startDate: 
+            properties:
+                startDate:
                     type: "string"
                     format: "date"
-                endDate: 
+                endDate:
                     type: "string"
                     format: "date"
         language:
             type: "string"
-        licenseRef: 
+        licenseRef:
             type: "array"
-            items: 
+            items:
                 type: "object"
-                properties: 
-                    uri: 
+                properties:
+                    uri:
                         type: "string"
-                    startDate: 
-                        type: "string"
-                        format: "date"
-                    endDate: 
+                        format: "uri"
+                    startDate:
                         type: "string"
                         format: "date"
-        notificationLink: 
+                    endDate:
+                        type: "string"
+                        format: "date"
+                required:
+                    - "uri"
+        notificationLink:
             type: "string"
-        publisher: 
+            format: "uri"
+        publisher:
             type: "string"
-        raw: 
+        raw:
             type: "string"
-        relation: 
+            format: "uri"
+        relation:
             type: "array"
-            items: 
+            items:
                 type: "string"
-        resourceIdentifier: 
+                format: "uri"
+        resourceIdentifier:
             type: "string"
-        revisionTime: 
+            format: "uri"
+        revisionTime:
             type: "string"
-        source: 
+            format: "date-time"
+        source:
             type: "string"
-        sponsorship: 
+        sponsorship:
             type: "array"
-            items: 
-                type: "object"
-                properties: 
-                    award: 
-                        type: "object"
-                        properties: 
-                            awardName: 
-                                type: "string"
-                            awardIdentifier: 
-                                type: "string"
-                    sponsor: 
-                        type: "object"
-                        properties: 
-                            sponsorName: 
-                                type: "string"
-                            sponsorIdentifier: 
-                                type: "string"
-        title: 
+            items:
+                $ref: "#/definitions/sponsorship"
+        title:
             type: "string"
-        journalArticleVersion: 
+        journalArticleVersion:
+            enum:
+                - "AO"
+                - "SMUR"
+                - "AM"
+                - "P"
+                - "VoR"
+                - "CVoR"
+                - "EVoR"
+                - "NA"
+        versionOfRecord:
             type: "string"
-        versionOfRecord: 
-            type: "string"
+            format: "uri"
         otherProperties:
             type: "object"
         shareProperties:
@@ -129,14 +161,13 @@
             properties:
                 collectionDateTime:
                     type: "string"
+                    format: "date-time"
     required:
-        - "creationDate"
         - "creator"
         - "directLink"
+        - "releaseDate"
         - "notificationLink"
-        - "relation"
+        - "raw"
         - "resourceIdentifier"
-        - "revisionTime"
         - "source"
-        - "sponsorship"
         - "title"
