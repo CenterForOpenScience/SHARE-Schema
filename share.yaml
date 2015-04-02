@@ -70,9 +70,6 @@
     $schema: "http://json-schema.org/draft-04/schema#"
     type: "object"
     properties:
-        collectionTime:
-            type: "string"
-            format: "date-time"
         creationDate:
             type: "string"
             format: "date"
@@ -164,8 +161,8 @@
             properties:
                 collectionDateTime:
                     type: "string"
+                    format: "date-time"
     required:
-        - "collectionTime"
         - "creator"
         - "directLink"
         - "releaseDate"
