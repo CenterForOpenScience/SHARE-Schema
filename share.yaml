@@ -61,23 +61,12 @@
     sponsorship:
       type: "object"
       properties:
-        award: 
+        award:
           $ref: "#/definitions/award"
-        sponsor: 
+        sponsor:
           $ref: "#/definitions/sponsor"
       required:
         - "sponsor"
-    dateRange: 
-      type: "object"
-      properties:
-        startDate:
-          type: "string"
-          format: "date"
-        endDate:
-          type: "string"
-          format: "date"
-      required:
-        - startDate
   $schema: "http://json-schema.org/draft-04/schema#"
   type: "object"
   properties:
@@ -93,53 +82,66 @@
         anyOf:
           - $ref: "#/definitions/person"
           - $ref: "#/definitions/institution"
-    description: 
+    description:
       type: "string"
-    directLink: 
+    directLink:
       type: "string"
       format: "uri"
-    releaseDate: 
+    releaseDate:
       format: "date"
       type: "string"
-    freeToRead: 
+    freeToRead:
       type: "object"
-      $ref: "#/definitions/dateRange"
-    licenseRef: 
+      properties:
+        startDate:
+          type: "string"
+          format: "date"
+        endDate:
+          type: "string"
+          format: "date"
+    licenseRef:
       type: "array"
-      items: 
+      items:
         type: "object"
-        $ref: "#/definitions/dateRange"
-        properties: 
-          uri: 
+        properties:
+          uri:
             type: "string"
             format: "uri"
-    notificationLink: 
+          startDate:
+            type: "string"
+            format: "date"
+          endDate:
+            type: "string"
+            format: "date"
+        required:
+          - "uri"
+    notificationLink:
       type: "string"
-    publisher: 
+    publisher:
       type: "string"
-    raw: 
+    raw:
       type: "string"
-    relation: 
+    relation:
       type: "array"
-      items: 
+      items:
         type: "string"
-    resourceIdentifier: 
+    resourceIdentifier:
       type: "string"
-    revisionTime: 
+    revisionTime:
       type: "string"
-    source: 
+    source:
       type: "string"
-    sponsorship: 
+    sponsorship:
       type: "array"
-      items: 
+      items:
         $ref: "#/definitions/sponsorship"
-    title: 
+    title:
       type: "string"
-    journalArticleVersion: 
+    journalArticleVersion:
       type: "string"
-    versionOfRecord: 
+    versionOfRecord:
       type: "string"
-  required: 
+  required:
     - "collectionTime"
     - "creator"
     - "directLink"
