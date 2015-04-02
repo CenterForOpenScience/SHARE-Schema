@@ -117,18 +117,23 @@
           - "uri"
     notificationLink:
       type: "string"
+      format: "uri"
     publisher:
       type: "string"
     raw:
       type: "string"
+      format: "uri"
     relation:
       type: "array"
       items:
         type: "string"
+        format: "uri"
     resourceIdentifier:
       type: "string"
+      format: "uri"
     revisionTime:
       type: "string"
+      format: "date-time"
     source:
       type: "string"
     sponsorship:
@@ -138,9 +143,18 @@
     title:
       type: "string"
     journalArticleVersion:
-      type: "string"
+      enum:
+        - "AO"
+        - "SMUR"
+        - "AM"
+        - "P"
+        - "VoR"
+        - "CVoR"
+        - "EVoR"
+        - "NA"
     versionOfRecord:
       type: "string"
+      format: "uri"
   required:
     - "collectionTime"
     - "creator"
