@@ -99,6 +99,8 @@
                 endDate:
                     type: "string"
                     format: "date"
+        language:
+            type: "string"
         licenseRef:
             type: "array"
             items:
@@ -155,6 +157,13 @@
         versionOfRecord:
             type: "string"
             format: "uri"
+        otherProperties:
+            type: "object"
+        shareProperties:
+            type: "object"
+            properties:
+                collectionDateTime:
+                    type: "string"
     required:
         - "collectionTime"
         - "creator"
