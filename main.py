@@ -72,8 +72,10 @@ def gen_docs(schema, path):
         writer.writerows(rows)
 
 def process_object(schema, name, entry, rows, nesting='', required=''):
+    if not entry.get('properties'):
+        return rows
     required = 'Required' if name in schema['required'] else required
-    rows.append((nesting + name, 'object', None, entry.get('description')))
+    rows.append((nesting + name, 'object', None, required, entry.get('description')))
     nesting += '{}/'.format(name)
     for key, val in entry['properties'].items():
         if val.get('type') == 'object':
