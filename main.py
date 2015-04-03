@@ -62,7 +62,7 @@ def gen_docs(schema, path):
         elif val.get('type') == 'array':
             rows = process_array(schema, key, val, rows)
         elif val.get('$ref'):
-            process_ref(schema, val['ref'], rows, nesting)
+            rows = process_ref(schema, val['ref'], rows, nesting)
         else:
             rows = process_primitive(schema, key, val, rows)
 
@@ -83,7 +83,7 @@ def process_object(schema, name, entry, rows, nesting='', required=''):
         elif val.get('type') == 'array':
             rows = process_array(schema, key, val, rows, nesting)
         elif val.get("$ref"):
-            process_ref(schema, val["$ref"], rows, nesting)
+            rows = process_ref(schema, val["$ref"], rows, nesting)
         else:
             rows = process_primitive(schema, key, val, rows, nesting)
     return rows
