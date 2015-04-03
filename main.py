@@ -55,7 +55,15 @@ def write_to_json(schema, path):
 def gen_docs(schema, path):
     rows = [('name', 'type', 'format', 'description')]
     for key, val in schema['properties'].items():
-        rows.append(gen_row(schema, key, val))
+        if val.get('type') == 'object':
+            rows = process_object(schema, key, val, rows)
+        elif val.get('type') == 'array':
+            rows = process_array(schema, key, val, rows)
+        elif val.get('$ref'):
+            process_ref(schema, val['ref'], rows, nesting)
+        else:
+            rows = process_primitive(schema, key, val, rows)
+
 
     with open(path, 'wb') as f:
         writer = csv.writer(f)
@@ -71,7 +79,43 @@ def gen_row(schema, key, val):
     format = val.get('format', '')
     description = val.get('description')
 
+    if type_ == 'array':
+        return gen_array(schema, key, val)
+    elif type_ == 'object':
+        return gen_object(schema, key, val)
+
     return (key, type_, rfc_map.get(format), description)
+
+def process_object(schema, name, entry, rows, nesting=''):
+    rows.append((nesting + name, 'object', None, entry.get('description')))
+    nesting += '{}/'.format(name)
+    for key, val in entry['properties'].items():
+        if val['type'] == 'object':
+            rows = process_object(schema, key, val, rows, nesting)
+        elif val['type'] == 'array':
+            rows = process_array(schema, key, val, rows, nesting)
+        else:
+            rows = process_primitive(schema, key, val, rows, nesting)
+    return rows
+
+def process_array(schema, key, array, rows, nesting=''):
+    rows.append((nesting + key, 'array', None, array.get('description')))
+    nesting += 'items/'
+    if array['items'].get('$ref'):
+        rows = process_ref(schema, array['items']['$ref'], rows, nesting)
+    return rows
+
+def process_ref(schema, ref, rows, nesting):
+    return rows
+
+def process_primitive(schema, key, prim, rows, nesting=''):
+    rfc_map = {
+        'uri': 'RFC3987',
+        'date-time': 'RFC3339',
+        'date': 'ISO8601'
+    }
+    rows.append((nesting + key, prim.get('type'), rfc_map.get(prim.get('format', '')), prim.get('description')))
+    return rows
 
 if __name__ == '__main__':
     main()
