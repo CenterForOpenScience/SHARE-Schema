@@ -2,7 +2,9 @@ import csv
 import json
 import yaml
 import argparse
+
 import jsonschema
+from jsonpointer import resolve_pointer
 
 try:
     from yaml import CLoader as Loader, CDumper as Dumper
@@ -69,43 +71,43 @@ def gen_docs(schema, path):
         writer = csv.writer(f)
         writer.writerows(rows)
 
-def gen_row(schema, key, val):
-    rfc_map = {
-        'uri': 'RFC3987',
-        'date-time': 'RFC3339',
-        'date': 'ISO8601'
-    }
-    type_ = val.get('type')
-    format = val.get('format', '')
-    description = val.get('description')
-
-    if type_ == 'array':
-        return gen_array(schema, key, val)
-    elif type_ == 'object':
-        return gen_object(schema, key, val)
-
-    return (key, type_, rfc_map.get(format), description)
-
 def process_object(schema, name, entry, rows, nesting=''):
     rows.append((nesting + name, 'object', None, entry.get('description')))
     nesting += '{}/'.format(name)
     for key, val in entry['properties'].items():
-        if val['type'] == 'object':
+        if val.get('type') == 'object':
             rows = process_object(schema, key, val, rows, nesting)
-        elif val['type'] == 'array':
+        elif val.get('type') == 'array':
             rows = process_array(schema, key, val, rows, nesting)
+        elif val.get("$ref"):
+            process_ref(schema, val["$ref"], rows, nesting)
         else:
             rows = process_primitive(schema, key, val, rows, nesting)
     return rows
 
 def process_array(schema, key, array, rows, nesting=''):
-    rows.append((nesting + key, 'array', None, array.get('description')))
-    nesting += 'items/'
+    rows.append((key, 'array', None, array.get('description')))
     if array['items'].get('$ref'):
         rows = process_ref(schema, array['items']['$ref'], rows, nesting)
+    elif array['items'].get('type') == 'object':
+        nesting += '{}/'.format(key)
+        rows = process_object(schema, '', array['items'], rows, nesting)
+    else:
+        nesting += '{}/'.format(key)
+        rows = process_primitive(schema, '', array['items'], rows, nesting)
     return rows
 
 def process_ref(schema, ref, rows, nesting):
+    key = ref.split('/')[-1]
+    val = resolve_pointer(schema, ref[1:])
+    if val.get('type') == 'object':
+        rows = process_object(schema, key, val, rows, nesting)
+    elif val.get('type') == 'array':
+        rows = process_array(schema, key, val, rows, nesting)
+    elif val.get('$ref'):
+        rows = process_ref(schema, val['$ref'], rows, nesting)
+    else:
+        process_primitive(schema, key, val, rows, nesting)
     return rows
 
 def process_primitive(schema, key, prim, rows, nesting=''):
