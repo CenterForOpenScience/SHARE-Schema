@@ -2,64 +2,85 @@
     definitions:
         person:
             type: "object"
+            description: "A person that is a contributor to the research object"
             properties:
                 name:
+                    description: "Name of the person. May be blank"
                     type: "string"
                 sameAs:
+                    description: "Identifiers that describe this person"
                     type: "array"
                     items:
+                        description: "A single HTTP URI that describes this person"
                         type: "string"
                         format: "uri"
                 familyName:
+                    description: "Also called the \"last name,\" this element will be derived from the creator.name by SHARE if not supplied by the source."
                     type: "string"
                 givenName:
+                    description: "Also called the \"first name,\" this element will be derived from the creator.name by SHARE if not supplied by the source."
                     type: "string"
                 additionalName:
+                    description: "Also called the \"middle name,\" this element will be derived from the creator.name by SHARE if not supplied by the source."
                     type: "string"
                 email:
+                    description: "an email address for this person"
                     type: "string"
                     format: "email"
                 affiliation:
+                    description: "An organization that this person is affiliated with. For example, a school/university."
                     type: "string"
             required:
                 - "name"
         institution:
             type: "object"
+            description: "An institution that is a contributor to the research object"
             properties:
                 name:
+                    description: "Name of the organization. May be blank"
                     type: "string"
                 sameAs:
                     type: "array"
+                    description: "Identifiers that describe this organization"
                     items:
                         type: "string"
                         format: "uri"
+                        description: "A single HTTP URI that describes this institution"
                 email:
                     type: "string"
                     format: "uri"
+                    description: "an email address for this institution"
             required:
                 - "name"
         award:
             type: "object"
+            description: "The award made to support the creation of the resource."
             properties:
                 awardName:
                     type: "string"
+                    description: "The textual representation of the award identifier, issued by the sponsor, that relates to the resource."
                 awardIdentifier:
                     type: "string"
                     format: "uri"
+                    description: "An HTTP URI for the award, issued by the sponsor, that relates to the resource."
             required:
                 - "awardName"
         sponsor:
             type: "object"
+            description: "This describes the sponsor of the resource."
             properties:
                 sponsorName:
+                    description: "The name of the entity responsible for sponsoring the resource, recorded here as text."
                     type: "string"
                 sponsorIdentifier:
                     type: "string"
                     format: "uri"
+                    description: "A globally unique identifier for the sponsor of the resource should be recorded here."
             required:
                 - "sponsorName"
         sponsorship:
             type: "object"
+            description: "A sponsorship associated with the resource."
             properties:
                 award:
                     $ref: "#/definitions/award"
@@ -73,75 +94,98 @@
         creationDate:
             type: "string"
             format: "date"
-        creator:
+            description: "Creation date of the research object."
+        contributor:
             type: "array"
             items:
                 anyOf:
                     - $ref: "#/definitions/person"
                     - $ref: "#/definitions/institution"
         description:
+            description: "A textual description of the resource."
             type: "string"
         directLink:
+            description: "A persistent HTTP URI that points to the research object."
             type: "string"
             format: "uri"
         releaseDate:
             format: "date"
             type: "string"
+            description: "The date of public release when the research object is freely available."
         freeToRead:
             type: "object"
-            properties:
+            description: "A date range specifying when this research object will be free to read."
+            eroperties:
                 startDate:
                     type: "string"
                     format: "date"
+                    description: "The start date of the free to read period. If the resource was always free to read, then this date can be the same as creationDate or the date \"0000-00-00\""
                 endDate:
                     type: "string"
                     format: "date"
+                    description: "The date on which this resource will no longer be free to read"
+            required:
+              - startDate
         language:
             type: "string"
         licenseRef:
             type: "array"
+            description: "The licenses under which the research object is available"
             items:
                 type: "object"
                 properties:
                     uri:
                         type: "string"
                         format: "uri"
+                        description: "The HTTP URI of the license in effect during the period describe by this lincenseRef"
                     startDate:
                         type: "string"
                         format: "date"
+                        description: "The start date of the license period. If the resource was always licensed this way, then this date can be the same as creationDate or the date \"0000-00-00\""
                     endDate:
                         type: "string"
                         format: "date"
+                        description: "The date on which this resource will no longer be licensed in this way,"
                 required:
                     - "uri"
+                    - "startDate"
         notificationLink:
             type: "string"
             format: "uri"
+            description: "The persistent HTTP URI at which the individual record of this research release event can be retrieved in the future. (Same as @id.)"
         publisher:
             type: "string"
+            description: "This element contains the name of the entity, typically a 'publisher', responsible for making the version of record of the resource available. This could be a person, organisation or service"
         raw:
             type: "string"
             format: "uri"
+            description: "The URL of the raw record either harvested or pushed to SHARE by the source. These raw records are provided exactly as it was delivered to SHARE, which means they are widely varying in format and content."
         relation:
             type: "array"
+            description: "Related resources"
             items:
                 type: "string"
                 format: "uri"
+                description: "An HTTP URI which points to a related resource."
         resourceIdentifier:
             type: "string"
             format: "uri"
+            description: "An HTTP URI which unambiguously and persistently indicates the resource's identifier at a specific location."
         revisionTime:
             type: "string"
             format: "date-time"
-        source:
-            type: "string"
+            description: "The time this record was last revised by the provider"
         sponsorship:
             type: "array"
+            description: "Sponsorships associated with the array"
             items:
                 $ref: "#/definitions/sponsorship"
         title:
             type: "string"
-        journalArticleVersion:
+            description: "This refers to the title, and any sub-titles, of the resource. The title should be represented using the original spelling and wording. If the resource really has no title, then this element must still be supplied, though it may be empty"
+        version:
+            description: "This element indicates which 'version' of the resource is being described. While intended primarily for journal articles, it might be applicable to other types of resources as well."
+            type: "string"
             enum:
                 - "AO"
                 - "SMUR"
@@ -154,6 +198,7 @@
         versionOfRecord:
             type: "string"
             format: "uri"
+            description: "This field MUST contain an HTTP URI which is a persistent identifier for the published version of the resource. If a DOI has been issued by the publisher then this MUST be used. Such a DOI MUST be represented as an HTTP URI. "
         otherProperties:
             type: "object"
         shareProperties:
@@ -163,7 +208,7 @@
                     type: "string"
                     format: "date-time"
     required:
-        - "creator"
+        - "contributor"
         - "directLink"
         - "releaseDate"
         - "notificationLink"
