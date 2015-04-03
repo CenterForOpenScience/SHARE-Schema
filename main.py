@@ -55,7 +55,7 @@ def write_to_json(schema, path):
         f.write(json.dumps(schema, indent=4))
 
 def gen_docs(schema, path):
-    rows = [('name', 'type', 'format', 'description')]
+    rows = [('name', 'type', 'format', 'required', 'description')]
     for key, val in schema['properties'].items():
         if val.get('type') == 'object':
             rows = process_object(schema, key, val, rows)
@@ -71,7 +71,8 @@ def gen_docs(schema, path):
         writer = csv.writer(f)
         writer.writerows(rows)
 
-def process_object(schema, name, entry, rows, nesting=''):
+def process_object(schema, name, entry, rows, nesting='', required=''):
+    required = 'Required' if name in schema['required'] else required
     rows.append((nesting + name, 'object', None, entry.get('description')))
     nesting += '{}/'.format(name)
     for key, val in entry['properties'].items():
@@ -85,8 +86,9 @@ def process_object(schema, name, entry, rows, nesting=''):
             rows = process_primitive(schema, key, val, rows, nesting)
     return rows
 
-def process_array(schema, key, array, rows, nesting=''):
-    rows.append((key, 'array', None, array.get('description')))
+def process_array(schema, key, array, rows, nesting='', required=''):
+    required = 'Required' if key in schema['required'] else required
+    rows.append((key, 'array', None, required, array.get('description')))
     if array['items'].get('$ref'):
         rows = process_ref(schema, array['items']['$ref'], rows, nesting)
     elif array['items'].get('type') == 'object':
@@ -110,13 +112,14 @@ def process_ref(schema, ref, rows, nesting):
         process_primitive(schema, key, val, rows, nesting)
     return rows
 
-def process_primitive(schema, key, prim, rows, nesting=''):
+def process_primitive(schema, key, prim, rows, nesting='', required=''):
     rfc_map = {
         'uri': 'RFC3987',
         'date-time': 'RFC3339',
         'date': 'ISO8601'
     }
-    rows.append((nesting + key, prim.get('type'), rfc_map.get(prim.get('format', '')), prim.get('description')))
+    required = 'Required' if key in schema['required'] else required
+    rows.append((nesting + key, prim.get('type'), rfc_map.get(prim.get('format', '')), required, prim.get('description')))
     return rows
 
 if __name__ == '__main__':
