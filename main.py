@@ -90,12 +90,16 @@ def process_object(schema, name, entry, rows, nesting='', required=''):
 
 def process_array(schema, key, array, rows, nesting='', required=''):
     required = 'Required' if key in schema['required'] else required
-    rows.append((key, 'array', None, required, array.get('description')))
+    rows.append((nesting + key, 'array', None, required, array.get('description')))
     if array['items'].get('$ref'):
         rows = process_ref(schema, array['items']['$ref'], rows, nesting)
     elif array['items'].get('type') == 'object':
         nesting += '{}/'.format(key)
         rows = process_object(schema, '', array['items'], rows, nesting)
+    elif array['items'].get('anyOf'):
+        nesting += '{}/'.format(key)
+        for ref in array['items']['anyOf']:
+            rows = process_ref(schema, ref['$ref'], rows, nesting)
     else:
         nesting += '{}/'.format(key)
         rows = process_primitive(schema, '', array['items'], rows, nesting)
