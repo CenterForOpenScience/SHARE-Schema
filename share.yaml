@@ -185,6 +185,7 @@
             description: "This refers to the title, and any sub-titles, of the resource. The title should be represented using the original spelling and wording. If the resource really has no title, then this element must still be supplied, though it may be empty"
         version:
             description: "This element indicates which 'version' of the resource is being described. While intended primarily for journal articles, it might be applicable to other types of resources as well."
+            type: "string"
             enum:
                 - "AO"
                 - "SMUR"
