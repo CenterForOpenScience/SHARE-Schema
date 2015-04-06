@@ -5,26 +5,26 @@
             description: "A person that is a contributor to the research object"
             properties:
                 name:
-                    description: "Name of the person. May be blank"
+                    description: The name of the person if familyName, givenName, and/or additionalName.
                     type: "string"
                 sameAs:
-                    description: "Identifiers that describe this person"
+                    description: An array of identifiers expressed as HTTP URIs that describe the person. For example, an ORCID, ResearcherID, arXiv author ID, ScopusID,  ISNI, or other unique identifier expressed as an HTTP URI.
                     type: "array"
                     items:
-                        description: "A single HTTP URI that describes this person"
+                        description: An HTTP URI that describes the person.
                         type: "string"
                         format: "uri"
                 familyName:
-                    description: "Also called the \"last name,\" this element will be derived from the creator.name by SHARE if not supplied by the source."
+                    description: Also called the "last name", this element is preferred over using the combined "name" field.
                     type: "string"
                 givenName:
-                    description: "Also called the \"first name,\" this element will be derived from the creator.name by SHARE if not supplied by the source."
+                    description: Also called the "first name", this element is preferred over using the combined "name" field.
                     type: "string"
                 additionalName:
-                    description: "Also called the \"middle name,\" this element will be derived from the creator.name by SHARE if not supplied by the source."
+                    description: Also called the "middle name", this element will be derived from the creator.name by SHARE if not supplied by the source.
                     type: "string"
                 email:
-                    description: "an email address for this person"
+                    description: The email address for this person.
                     type: "string"
                     format: "email"
                 affiliation:
@@ -37,7 +37,7 @@
             description: "An institution that is a contributor to the research object"
             properties:
                 name:
-                    description: "Name of the organization. May be blank"
+                    description: "Name of the organization."
                     type: "string"
                 sameAs:
                     type: "array"
@@ -49,7 +49,7 @@
                 email:
                     type: "string"
                     format: "uri"
-                    description: "an email address for this institution"
+                    description: "An email address for this institution"
             required:
                 - "name"
         award:
@@ -92,17 +92,18 @@
     type: "object"
     properties:
         creationDate:
+            description: "Creation date of the research object."
             type: "string"
             format: "date"
-            description: "Creation date of the research object."
         contributor:
+            description: The people or organizations responsible for making contributions to an object.
             type: "array"
             items:
                 anyOf:
                     - $ref: "#/definitions/person"
                     - $ref: "#/definitions/institution"
         description:
-            description: "A textual description of the resource."
+            description: A textual description of the resource.
             type: "string"
         directLink:
             description: "A persistent HTTP URI that points to the research object."
@@ -128,9 +129,9 @@
               - startDate
         language:
             type: "string"
-        licenseRef:
+        license:
+            description: "The licenses under which the object has been released."
             type: "array"
-            description: "The licenses under which the research object is available"
             items:
                 type: "object"
                 properties:
@@ -181,8 +182,8 @@
             items:
                 $ref: "#/definitions/sponsorship"
         title:
+            description: The title and any sub-titles of the resource.
             type: "string"
-            description: "This refers to the title, and any sub-titles, of the resource. The title should be represented using the original spelling and wording. If the resource really has no title, then this element must still be supplied, though it may be empty"
         version:
             description: "This element indicates which 'version' of the resource is being described. While intended primarily for journal articles, it might be applicable to other types of resources as well."
             type: "string"
@@ -208,11 +209,11 @@
                     type: "string"
                     format: "date-time"
     required:
-        - "contributor"
+        - contributor
         - "directLink"
         - "releaseDate"
         - "notificationLink"
         - "raw"
         - "resourceIdentifier"
         - "source"
-        - "title"
+        - title
