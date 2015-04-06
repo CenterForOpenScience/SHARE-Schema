@@ -1,5 +1,23 @@
 ---
     definitions:
+        license:
+            type: "object"
+            properties:
+                uri:
+                    type: "string"
+                    format: "uri"
+                    description: "The HTTP URI of the license in effect during the period describe by this lincenseRef"
+                startDate:
+                    type: "string"
+                    format: "date"
+                    description: "The start date of the license period. If the resource was always licensed this way, then this date can be the same as creationDate or the date \"0000-00-00\""
+                endDate:
+                    type: "string"
+                    format: "date"
+                    description: "The date on which this resource will no longer be licensed in this way,"
+            required:
+                - "uri"
+                - "startDate"
         person:
             type: "object"
             description: "A person that is a contributor to the research object"
@@ -133,23 +151,7 @@
             description: "The licenses under which the object has been released."
             type: "array"
             items:
-                type: "object"
-                properties:
-                    uri:
-                        type: "string"
-                        format: "uri"
-                        description: "The HTTP URI of the license in effect during the period describe by this lincenseRef"
-                    startDate:
-                        type: "string"
-                        format: "date"
-                        description: "The start date of the license period. If the resource was always licensed this way, then this date can be the same as creationDate or the date \"0000-00-00\""
-                    endDate:
-                        type: "string"
-                        format: "date"
-                        description: "The date on which this resource will no longer be licensed in this way,"
-                required:
-                    - "uri"
-                    - "startDate"
+              $ref: "#/definitions/license"
         notificationLink:
             type: "string"
             format: "uri"
