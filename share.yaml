@@ -68,7 +68,7 @@
                     description: The organization(s) that this person is affiliated with. For example, a school/university.
                     type: "array"
                     items:
-                        - $ref: "#/definitions/organization"
+                        $ref: "#/definitions/organization"
             required:
                 - "name"
         organization:

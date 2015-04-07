@@ -67,16 +67,13 @@ def gen_docs(schema, path):
     for key, val in schema['definitions'].items():
         rows.append(['','','','',''])
         rows = process_object(schema, key, val, rows)
-        # rows.append([key, 'object', None, None, val.get('description')])
-        # for k, v in val['properties'].items():
-        #     rows = process_object(schema, k, v, rows, nesting=key+'/')
 
     with open(path, 'wb') as f:
         writer = csv.writer(f)
         writer.writerows(rows)
 
 def process_object(schema, name, entry, rows, nesting='', required=''):
-    required = 'Required' if name in schema['required'] else required
+    required = 'Required' if name in schema['required'] + entry.get('required', [])  else required
     if not entry.get('properties'):
         rows.append([nesting + name, 'object', None, required, entry.get('description')])
         return rows
