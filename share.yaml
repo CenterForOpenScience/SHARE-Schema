@@ -147,6 +147,7 @@
               - startDate
         language:
             type: "string"
+            pattern: "[a-z][a-z][a-z]"
         license:
             description: "The licenses under which the object has been released."
             type: "array"
