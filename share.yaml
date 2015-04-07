@@ -1,8 +1,8 @@
 ---
     definitions:
         person:
+            description: A person that is a contributor to the research object.
             type: "object"
-            description: "A person that is a contributor to the research object"
             properties:
                 name:
                     description: The name of the person if familyName, givenName, and/or additionalName.
@@ -28,16 +28,18 @@
                     type: "string"
                     format: "email"
                 affiliation:
-                    description: "An organization that this person is affiliated with. For example, a school/university."
-                    type: "string"
+                    description: The organization(s) that this person is affiliated with. For example, a school/university.
+                    type: "array"
+                    items:
+                        - $ref: "#/definitions/organization"
             required:
                 - "name"
-        institution:
+        organization:
             type: "object"
-            description: "An institution that is a contributor to the research object"
+            description: An organization or institution.
             properties:
                 name:
-                    description: "Name of the organization."
+                    description: The name of the organization.
                     type: "string"
                 sameAs:
                     type: "array"
@@ -45,11 +47,11 @@
                     items:
                         type: "string"
                         format: "uri"
-                        description: "A single HTTP URI that describes this institution"
+                        description: "A single HTTP URI that describes this organization"
                 email:
                     type: "string"
                     format: "uri"
-                    description: "An email address for this institution"
+                    description: "An email address for this organization"
             required:
                 - "name"
         award:
@@ -101,7 +103,7 @@
             items:
                 anyOf:
                     - $ref: "#/definitions/person"
-                    - $ref: "#/definitions/institution"
+                    - $ref: "#/definitions/organization"
         description:
             description: A textual description of the resource.
             type: "string"
