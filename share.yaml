@@ -1,5 +1,24 @@
 ---
     definitions:
+        otherProperties:
+            type: "object"
+            properties:
+                name:
+                    type: "string"
+                    description: "A name that describes this entry"
+                description:
+                    type: "string"
+                    description: "A description of this entry"
+                properties:
+                    type: "object"
+                    description: "The collection of key:value pairs for this entry"
+                uri:
+                    type: "string"
+                    format: "uri"
+                    description: "A URI that points to a specification for the schema of this entry"
+            required:
+                - name
+                - properties
         license:
             type: "object"
             properties:
@@ -204,7 +223,10 @@
             format: "uri"
             description: "This field MUST contain an HTTP URI which is a persistent identifier for the published version of the resource. If a DOI has been issued by the publisher then this MUST be used. Such a DOI MUST be represented as an HTTP URI. "
         otherProperties:
-            type: "object"
+            type: "array"
+            description: "Structured or unstructured properties that don't fall into the general schema"
+            items:
+                $ref: "#/definitions/otherProperties"
         shareProperties:
             type: "object"
             properties:
@@ -212,11 +234,11 @@
                     type: "string"
                     format: "date-time"
     required:
-        - contributor
+        - "contributor"
         - "directLink"
         - "releaseDate"
         - "notificationLink"
         - "raw"
         - "resourceIdentifier"
         - "source"
-        - title
+        - "title"
