@@ -28,7 +28,7 @@ def main():
 def parse_args():
     parser = argparse.ArgumentParser(description="A command line interface for schema things")
 
-    parser.add_argument('--test', dest='test', type=str, help='The name of the test json file', default='test')
+    parser.add_argument('--test', dest='test', type=str, help='The path to a test file to validate against', default='tests/valid.json')
     parser.add_argument('--yaml', dest='yaml_path', type=str, help='The name of the yaml schema file', default='share')
     parser.add_argument('-d', '--dest', dest='dest', type=str, help='The name of the desired json output file', default='schema')
     parser.add_argument('--docs', dest='docs', type=str, help='The full path (extension included) to the desired location for documentation', default='')
@@ -43,7 +43,7 @@ def get_json_schema(yaml_path):
 
 
 def validate(schema, path):
-    with open(path + '.json', 'r') as f:
+    with open(path, 'r') as f:
         test = json.load(f)
 
     format_checker = jsonschema.FormatChecker(formats=jsonschema.FormatChecker.checkers.keys())
