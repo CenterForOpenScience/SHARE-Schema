@@ -1,5 +1,42 @@
 ---
     definitions:
+        otherProperties:
+            type: "object"
+            properties:
+                name:
+                    type: "string"
+                    description: "A name that describes this entry"
+                description:
+                    type: "string"
+                    description: "A description of this entry"
+                properties:
+                    type: "object"
+                    description: "The collection of key:value pairs for this entry"
+                uri:
+                    type: "string"
+                    format: "uri"
+                    description: "A URI that points to a specification for the schema of this entry"
+            required:
+                - name
+                - properties
+        license:
+            type: "object"
+            properties:
+                uri:
+                    type: "string"
+                    format: "uri"
+                    description: "The HTTP URI of the license in effect during the period describe by this lincenseRef"
+                startDate:
+                    type: "string"
+                    format: "date"
+                    description: "The start date of the license period. If the resource was always licensed this way, then this date can be the same as creationDate or the date \"0000-00-00\""
+                endDate:
+                    type: "string"
+                    format: "date"
+                    description: "The date on which this resource will no longer be licensed in this way,"
+            required:
+                - "uri"
+                - "startDate"
         person:
             description: A person that is a contributor to the research object.
             type: "object"
@@ -31,7 +68,7 @@
                     description: The organization(s) that this person is affiliated with. For example, a school/university.
                     type: "array"
                     items:
-                        - $ref: "#/definitions/organization"
+                        $ref: "#/definitions/organization"
             required:
                 - "name"
         organization:
@@ -131,27 +168,12 @@
               - startDate
         language:
             type: "string"
+            pattern: "[a-z][a-z][a-z]"
         license:
             description: "The licenses under which the object has been released."
             type: "array"
             items:
-                type: "object"
-                properties:
-                    uri:
-                        type: "string"
-                        format: "uri"
-                        description: "The HTTP URI of the license in effect during the period describe by this lincenseRef"
-                    startDate:
-                        type: "string"
-                        format: "date"
-                        description: "The start date of the license period. If the resource was always licensed this way, then this date can be the same as creationDate or the date \"0000-00-00\""
-                    endDate:
-                        type: "string"
-                        format: "date"
-                        description: "The date on which this resource will no longer be licensed in this way,"
-                required:
-                    - "uri"
-                    - "startDate"
+              $ref: "#/definitions/license"
         notificationLink:
             type: "string"
             format: "uri"
@@ -203,7 +225,10 @@
             format: "uri"
             description: "This field MUST contain an HTTP URI which is a persistent identifier for the published version of the resource. If a DOI has been issued by the publisher then this MUST be used. Such a DOI MUST be represented as an HTTP URI. "
         otherProperties:
-            type: "object"
+            type: "array"
+            description: "Structured or unstructured properties that don't fall into the general schema"
+            items:
+                $ref: "#/definitions/otherProperties"
         shareProperties:
             type: "object"
             properties:
@@ -211,11 +236,11 @@
                     type: "string"
                     format: "date-time"
     required:
-        - contributor
+        - "contributor"
         - "directLink"
         - "releaseDate"
         - "notificationLink"
         - "raw"
         - "resourceIdentifier"
         - "source"
-        - title
+        - "title"
