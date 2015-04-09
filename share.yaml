@@ -4,18 +4,18 @@
             type: "object"
             properties:
                 name:
+                    description: A name that describes this collection of properties.
                     type: "string"
-                    description: "A name that describes this entry"
                 description:
+                    description: A description of this collection of properties.
                     type: "string"
-                    description: "A description of this entry"
                 properties:
+                    description: The collection of key:value pair properties.
                     type: "object"
-                    description: "The collection of key:value pairs for this entry"
                 uri:
+                    description: A URI that points to a definition, schema, andvocabulary of this entry.
                     type: "string"
                     format: "uri"
-                    description: "A URI that points to a specification for the schema of this entry"
             required:
                 - name
                 - properties
@@ -23,9 +23,12 @@
             type: "object"
             properties:
                 uri:
+                    description: The HTTP URI of the license of the object or--if startDate and endDate are included--in effect during the period listed.
                     type: "string"
                     format: "uri"
-                    description: "The HTTP URI of the license in effect during the period describe by this lincenseRef"
+                description:
+                    description: Text describing to what the license is applied.
+                    type: "string"
                 startDate:
                     type: "string"
                     format: "date"
@@ -130,13 +133,12 @@
     $schema: "http://json-schema.org/draft-04/schema#"
     type: "object"
     properties:
-        creationDate:
-            description: "Creation date of the research object."
+        title:
+            description: The title and any sub-titles of the resource.
             type: "string"
-            format: "date"
-        contributor:
+        contributors:
             description: The people or organizations responsible for making contributions to an object.
-            type: "array"
+            type: array
             items:
                 anyOf:
                     - $ref: "#/definitions/person"
@@ -144,40 +146,69 @@
         description:
             description: A textual description of the resource.
             type: "string"
-        directLink:
-            description: "A persistent HTTP URI that points to the research object."
-            type: "string"
-            format: "uri"
-        releaseDate:
-            format: "date"
-            type: "string"
-            description: "The date of public release when the research object is freely available."
+        uris:
+            type: object
+            properties:
+                anyOf:
+                    canonicalUri:
+                        description: The preferred persistent HTTP URI that represents the research object. This should be repeated in exactly one other field in the uris object.
+                        type: string
+                        format: uri
+                    objectUris:
+                        description: A persistent HTTP URI that points directly to the research object.
+                        type: array
+                        items:
+                            type: string
+                            format: uri
+                    descriptorUris:
+                        description: A persistent HTTP URI that points to a description of the research object.
+                        type: array
+                        items:
+                            type: string
+                            format: uri
+                    providerUris:
+                        description: The persistent HTTP URI that points to a provider of the research object.
+                        type: array
+                        items:
+                            type: string
+                            format: uri
+        dates:
+            type: object
+            properties:
+                anyOf:
+                    objectUpdatedDateTime:
+                        description: The date and time the object was created or updated by its contributors. If the data for the object describes the first version of that object, it will be the date and time of object creation, otherwise it will be considered the date and time the object was updated.
+                        type: string
+                        format: date-time
+                    providerUpdatedDateTime:
+                        description: The date and time the provider describing the object has been updated about either the creation or update of an object by its contributors. E.g., this may be the date a manuscript is published, but not necessarily the date the manuscript was written.
+                        type: string
+                        format: date-time
         freeToRead:
             type: "object"
-            description: "A date range specifying when this research object will be free to read."
-            eroperties:
+            description: A date range specifying when this research object will be accessible, without restrictsions such as fee or registration). If the object is free to read, then only the startDate is required.
+            properties:
                 startDate:
+                    description: The date and time at which the object will be accessible. If the resource was always free to read, then the date the object was created should be used.
                     type: "string"
-                    format: "date"
-                    description: "The start date of the free to read period. If the resource was always free to read, then this date can be the same as creationDate or the date \"0000-00-00\""
+                    format: date-time
                 endDate:
+                    description: The date and time at which restrictions such as fees or registrations will be in place limiting accessibility.
                     type: "string"
-                    format: "date"
-                    description: "The date on which this resource will no longer be free to read"
+                    format: date-time
             required:
               - startDate
-        language:
-            type: "string"
-            pattern: "[a-z][a-z][a-z]"
-        license:
-            description: "The licenses under which the object has been released."
+        languages:
+            description: The primary languages in which the content of the resource is presented. Values used for this element MUST conform to ISO 639–3. This offers two and three letter tags e.g. "en" or "eng" for English and "en-GB" for English used in the UK.
+            type: array
+            items:
+                type: string
+                pattern: "[a-z][a-z][a-z]"
+        licenses:
+            description: The licenses under which the object has been released.
             type: "array"
             items:
-              $ref: "#/definitions/license"
-        notificationLink:
-            type: "string"
-            format: "uri"
-            description: "The persistent HTTP URI at which the individual record of this research release event can be retrieved in the future. (Same as @id.)"
+                $ref: "#/definitions/license"
         publisher:
             type: "string"
             description: "This element contains the name of the entity, typically a 'publisher', responsible for making the version of record of the resource available. This could be a person, organisation or service"
@@ -192,22 +223,21 @@
                 type: "string"
                 format: "uri"
                 description: "An HTTP URI which points to a related resource."
-        resourceIdentifier:
-            type: "string"
-            format: "uri"
-            description: "An HTTP URI which unambiguously and persistently indicates the resource's identifier at a specific location."
-        revisionTime:
-            type: "string"
-            format: "date-time"
-            description: "The time this record was last revised by the provider"
-        sponsorship:
+        sponsorships:
+            description: "Sponsorships associated with the object"
             type: "array"
-            description: "Sponsorships associated with the array"
             items:
                 $ref: "#/definitions/sponsorship"
-        title:
-            description: The title and any sub-titles of the resource.
-            type: "string"
+        subjects:
+            description: "The topic or domain of the object. Follows recommendations of http://dublincore.org/documents/2012/06/14/dcmi-terms/?v=elements#terms-subject"
+            type: "array"
+            items:
+                type: string
+        tags:
+            description: Non-hierarchical terms or keywords assigned to an object to aid browsing or searching.
+            type: array
+                items:
+                    type: string
         version:
             description: "This element indicates which 'version' of the resource is being described. While intended primarily for journal articles, it might be applicable to other types of resources as well."
             type: "string"
@@ -221,26 +251,22 @@
                 - "EVoR"
                 - "NA"
         versionOfRecord:
+            description: "This field MUST contain an HTTP URI which is a persistent identifier for the published version of the resource. If a DOI has been issued by the publisher then this MUST be used. Such a DOI MUST be represented as an HTTP URI. "
             type: "string"
             format: "uri"
-            description: "This field MUST contain an HTTP URI which is a persistent identifier for the published version of the resource. If a DOI has been issued by the publisher then this MUST be used. Such a DOI MUST be represented as an HTTP URI. "
         otherProperties:
+            description: Any structured or unstructured properties (properties that do or do not include URIs to definitions) that do not fall into the schema provided.
             type: "array"
-            description: "Structured or unstructured properties that don't fall into the general schema"
             items:
                 $ref: "#/definitions/otherProperties"
         shareProperties:
-            type: "object"
-            properties:
-                collectionDateTime:
-                    type: "string"
-                    format: "date-time"
+            description: Properties that are generated and/or organized by the SHARE system (e.g., timestamps of when SHARE processes data). These properities are used internally and are not guaranteed to remain consistent.
+            type: object
     required:
-        - "contributor"
-        - "directLink"
-        - "releaseDate"
-        - "notificationLink"
-        - "raw"
+        - title
+        - contributors
+        - uris
+        - dates
+        - raw
         - "resourceIdentifier"
         - "source"
-        - "title"
