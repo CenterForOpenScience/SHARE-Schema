@@ -1,33 +1,24 @@
 {
   "creationDate": "2014-09-12",
-  "contributor": [
+  "contributors": [
     {
       "name": "Roger Danger Ebert",
       "sameAs": [
-        "https://osf.io/wrgr2/"
+        "https://osf.io/thing"
       ],
       "familyName": "Ebert",
       "givenName": "Roger",
       "additionalName": "Danger",
-      "email": "roger@example.com",
-      "affiliation": "University of Movies"
+      "email": "rogerebert@example.com"
     },
     {
-      "name": "Roger Madness Ebert",
-      "sameAs": [
-        "http://osf.io/wrgr3/"
-      ],
-      "familyName": "Ebert",
-      "givenName": "Roger",
-      "additionalName": "Madness",
-      "email": "rogermadness@example.com",
-      "affiliation": "University of Movies"
+      "name": "Roger Madness Ebert"
     }
   ],
   "language": "eng",
   "description": "This is a thing",
   "directLink": "https://www.example.com/stuff",
-  "releaseDate": "2014-12-12",
+  "providerUpdatedDateTime": "2014-12-12T00:00:00Z",
   "freeToRead": {
     "startDate": "2014-09-12",
     "endDate": "2014-10-12"
@@ -40,7 +31,10 @@
     }
   ],
   "notificationLink": "http://myresearch.com/",
-  "publisher": "Roger Ebert Inc",
+  "publisher": {
+    "name": "Roger Ebert Inc",
+    "email": "roger@example.com"
+  },
   "raw": "http://osf.io/raw/thisdocument/",
   "relation": [
     "http://otherresearch.com/this"
@@ -62,5 +56,8 @@
   ],
   "title": "Interesting research",
   "journalArticleVersion": "AO",
-  "versionOfRecord": "http://example.com/this/now/"
+  "versionOfRecord": "http://example.com/this/now/",
+  "uris": {
+    "canonicalUri": "http://example.com"
+  }
 }
