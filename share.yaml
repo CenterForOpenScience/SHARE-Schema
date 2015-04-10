@@ -166,7 +166,7 @@
                             type: string
                             format: uri
                     providerUris:
-                        description: The persistent HTTP URI that points to the object's record at the SHARE provider regardless of format.
+                        description: "The persistent HTTP URI that points to the object's record at the SHARE provider regardless of format."
                         type: array
                         items:
                             type: string
@@ -182,11 +182,11 @@
                 startDate:
                     description: The date and time at which the object will be accessible. If the resource was always free to read, then the date the object was created should be used.
                     type: "string"
-                    format: date-time
+                    format: date
                 endDate:
                     description: The date and time at which restrictions such as fees or registrations will be in place limiting accessibility.
                     type: "string"
-                    format: date-time
+                    format: date
             required:
               - startDate
         languages:
@@ -202,7 +202,7 @@
                 $ref: "#/definitions/license"
         publisher:
             description: "This element contains the name of the entity, typically a 'publisher', responsible for making the version of record of the resource available. This could be a person, organisation or service"
-            type: "string"
+            type: "object"
             anyOf:
                 - $ref: "#/definitions/person"
                 - $ref: "#/definitions/organization"
@@ -219,8 +219,8 @@
         tags:
             description: Non-hierarchical terms or keywords assigned to an object to aid browsing or searching.
             type: array
-                items:
-                    type: string
+            items:
+                type: string
         version:
             description: Infomation about this version of the object.
             type: object
@@ -247,4 +247,4 @@
         - title
         - contributors
         - uris
-        - dates
+        - providerUpdatedDateTime
