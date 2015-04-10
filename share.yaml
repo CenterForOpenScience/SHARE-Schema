@@ -10,10 +10,10 @@
                     description: A description of this collection of properties.
                     type: "string"
                 properties:
-                    description: The collection of key:value pair properties.
+                    description: The collection of key/value pair properties.
                     type: "object"
                 uri:
-                    description: A URI that points to a definition, schema, andvocabulary of this entry.
+                    description: A URI that points to the definition, schema, and/or vocabulary of this entry.
                     type: "string"
                     format: "uri"
             required:
@@ -24,22 +24,21 @@
             properties:
                 uri:
                     description: The HTTP URI of the license of the object or--if startDate and endDate are included--in effect during the period listed.
-                    type: "string"
-                    format: "uri"
+                    type: string
+                    format: uri
                 description:
-                    description: Text describing to what the license is applied.
-                    type: "string"
+                    description: Text describing to what aspect of the object the license is applied.
+                    type: string
                 startDate:
-                    type: "string"
-                    format: "date"
-                    description: "The start date of the license period. If the resource was always licensed this way, then this date can be the same as creationDate or the date \"0000-00-00\""
+                    description: The date and time at which the license will apply to this object. If the resource was always licensed this way, then this date can be omitted.
+                    type: string
+                    format: date-time
                 endDate:
-                    type: "string"
-                    format: "date"
-                    description: "The date on which this resource will no longer be licensed in this way,"
+                    description: The date and time at which this resource will no longer be licensed in this way.
+                    type: string
+                    format: date-time
             required:
                 - "uri"
-                - "startDate"
         person:
             description: A person that is a contributor to the research object.
             type: "object"
@@ -95,21 +94,21 @@
             required:
                 - "name"
         award:
-            type: "object"
-            description: "The award made to support the creation of the resource."
+            description: The award made in support of the object.
+            type: object
             properties:
                 awardName:
+                    description: The textual representation of the award identifier as issued by the sponsor.
                     type: "string"
-                    description: "The textual representation of the award identifier, issued by the sponsor, that relates to the resource."
                 awardIdentifier:
                     type: "string"
                     format: "uri"
-                    description: "An HTTP URI for the award, issued by the sponsor, that relates to the resource."
+                    description: An HTTP URI for the award.
             required:
-                - "awardName"
+                - awardName
         sponsor:
-            type: "object"
             description: "This describes the sponsor of the resource."
+            type: object
             properties:
                 sponsorName:
                     description: "The name of the entity responsible for sponsoring the resource, recorded here as text."
@@ -167,23 +166,15 @@
                             type: string
                             format: uri
                     providerUris:
-                        description: The persistent HTTP URI that points to a provider of the research object.
+                        description: The persistent HTTP URI that points to the object's record at the SHARE provider regardless of format.
                         type: array
                         items:
                             type: string
                             format: uri
-        dates:
-            type: object
-            properties:
-                anyOf:
-                    objectUpdatedDateTime:
-                        description: The date and time the object was created or updated by its contributors. If the data for the object describes the first version of that object, it will be the date and time of object creation, otherwise it will be considered the date and time the object was updated.
-                        type: string
-                        format: date-time
-                    providerUpdatedDateTime:
-                        description: The date and time the provider describing the object has been updated about either the creation or update of an object by its contributors. E.g., this may be the date a manuscript is published, but not necessarily the date the manuscript was written.
-                        type: string
-                        format: date-time
+        providerUpdatedDateTime:
+            description: The date and time the provider describing the object has been updated about either the creation or update of an object by its contributors. E.g., this may be the date a manuscript is published, but not necessarily the date the manuscript was written.
+            type: string
+            format: date-time
         freeToRead:
             type: "object"
             description: A date range specifying when this research object will be accessible, without restrictsions such as fee or registration). If the object is free to read, then only the startDate is required.
@@ -210,19 +201,11 @@
             items:
                 $ref: "#/definitions/license"
         publisher:
-            type: "string"
             description: "This element contains the name of the entity, typically a 'publisher', responsible for making the version of record of the resource available. This could be a person, organisation or service"
-        raw:
             type: "string"
-            format: "uri"
-            description: "The URL of the raw record either harvested or pushed to SHARE by the source. These raw records are provided exactly as it was delivered to SHARE, which means they are widely varying in format and content."
-        relation:
-            type: "array"
-            description: "Related resources"
-            items:
-                type: "string"
-                format: "uri"
-                description: "An HTTP URI which points to a related resource."
+            anyOf:
+                - $ref: "#/definitions/person"
+                - $ref: "#/definitions/organization"
         sponsorships:
             description: "Sponsorships associated with the object"
             type: "array"
@@ -239,21 +222,19 @@
                 items:
                     type: string
         version:
-            description: "This element indicates which 'version' of the resource is being described. While intended primarily for journal articles, it might be applicable to other types of resources as well."
-            type: "string"
-            enum:
-                - "AO"
-                - "SMUR"
-                - "AM"
-                - "P"
-                - "VoR"
-                - "CVoR"
-                - "EVoR"
-                - "NA"
-        versionOfRecord:
-            description: "This field MUST contain an HTTP URI which is a persistent identifier for the published version of the resource. If a DOI has been issued by the publisher then this MUST be used. Such a DOI MUST be represented as an HTTP URI. "
-            type: "string"
-            format: "uri"
+            description: Infomation about this version of the object.
+            type: object
+            properties:
+                versionId:
+                    description: The name or number representing this version of the object.
+                versionDateTime:
+                    description: The date and time the object was created or updated by its contributors. If the data for the object describes the first version of that object, it will be the date and time of object creation, otherwise it will be considered the date and time the object was updated.
+                    type: string
+                    format: date-time
+                versionOf:
+                    description: If the object is an update, the HTTP URI of the object the content is updating. Depending upon what the upate is relative to, that could be the object at creation or a previous version.
+                    type: string
+                    format: uri
         otherProperties:
             description: Any structured or unstructured properties (properties that do or do not include URIs to definitions) that do not fall into the schema provided.
             type: "array"
@@ -267,6 +248,3 @@
         - contributors
         - uris
         - dates
-        - raw
-        - "resourceIdentifier"
-        - "source"
