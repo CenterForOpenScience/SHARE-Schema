@@ -1,5 +1,4 @@
 {
-  "creationDate": "2014-09-12",
   "contributors": [
     {
       "name": "Roger Danger Ebert",
@@ -15,34 +14,28 @@
       "name": "Roger Madness Ebert"
     }
   ],
-  "language": "eng",
+  "languages": [
+    "eng"
+  ],
   "description": "This is a thing",
-  "directLink": "https://www.example.com/stuff",
   "providerUpdatedDateTime": "2014-12-12T00:00:00Z",
   "freeToRead": {
     "startDate": "2014-09-12",
     "endDate": "2014-10-12"
   },
-  "licenseRef": [
+  "licenses": [
     {
       "uri": "http://www.mitlicense.com",
       "startDate": "2014-10-12",
       "endDate": "2014-11-12"
     }
   ],
-  "notificationLink": "http://myresearch.com/",
   "publisher": {
-    "name": "Roger Ebert Inc",
-    "email": "roger@example.com"
+      "name": "Roger Ebert Inc",
+      "email": "roger@example.com"
   },
   "raw": "http://osf.io/raw/thisdocument/",
-  "relation": [
-    "http://otherresearch.com/this"
-  ],
-  "resourceIdentifier": "http://landingpage.com/this",
-  "revisionTime": "2014-02-12T15:25:02Z",
-  "source": "Big government",
-  "sponsorship": [
+  "sponsorships": [
     {
       "award": {
         "awardName": "Participation",
@@ -55,8 +48,9 @@
     }
   ],
   "title": "Interesting research",
-  "journalArticleVersion": "AO",
-  "versionOfRecord": "http://example.com/this/now/",
+  "version": {
+    "versionId": "someID"
+  },
   "uris": {
     "canonicalUri": "http://example.com"
   }
