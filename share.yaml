@@ -147,12 +147,14 @@
             type: "string"
         uris:
             type: object
+            required:
+              - canonicalUri
             properties:
+                canonicalUri:
+                    description: The preferred persistent HTTP URI that represents the research object. This should be repeated in exactly one other field in the uris object.
+                    type: string
+                    format: uri
                 anyOf:
-                    canonicalUri:
-                        description: The preferred persistent HTTP URI that represents the research object. This should be repeated in exactly one other field in the uris object.
-                        type: string
-                        format: uri
                     objectUris:
                         description: A persistent HTTP URI that points directly to the research object.
                         type: array
