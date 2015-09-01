@@ -147,12 +147,14 @@
             type: "string"
         uris:
             type: object
+            required:
+              - canonicalUri
             properties:
+                canonicalUri:
+                    description: The preferred persistent HTTP URI that represents the research object. This should be repeated in exactly one other field in the uris object.
+                    type: string
+                    format: uri
                 anyOf:
-                    canonicalUri:
-                        description: The preferred persistent HTTP URI that represents the research object. This should be repeated in exactly one other field in the uris object.
-                        type: string
-                        format: uri
                     objectUris:
                         description: A persistent HTTP URI that points directly to the research object.
                         type: array
@@ -190,7 +192,7 @@
             required:
               - startDate
         languages:
-            description: The primary languages in which the content of the resource is presented. Values used for this element MUST conform to ISO 639–3. This offers two and three letter tags e.g. "en" or "eng" for English and "en-GB" for English used in the UK.
+            description: The primary languages in which the content of the resource is presented. Values used for this element MUST conform to ISO 639–3. This offers three letter tags e.g. "eng" for English.
             type: array
             items:
                 type: string
