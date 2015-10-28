@@ -16,7 +16,7 @@
                     description: A URI that points to the definition, schema, and/or vocabulary of this entry.
                     type: "string"
                     format: "uri"
-            required:
+            required
                 - name
                 - properties
         license:
